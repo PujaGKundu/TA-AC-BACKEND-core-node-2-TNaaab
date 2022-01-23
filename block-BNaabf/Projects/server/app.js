@@ -1,7 +1,7 @@
 //relative path of index.js
-console.log("./index.html");
+console.log("../client/index.html");
 
 //absolute path of index.js
 var path = require("path");
-var filePath = path.join(__dirname + "index.html");
+var filePath = path.join(__dirname, "..", "client/index.html");
 console.log(filePath);
