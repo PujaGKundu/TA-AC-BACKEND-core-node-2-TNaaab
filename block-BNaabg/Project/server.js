@@ -22,7 +22,7 @@ function handleRequest(req, res) {
         fs.writeFile(fd, store, (err) => {
           if (err) return console.log(err);
           fs.close(fd, () => {
-            res.end(`${username} created successfully`);
+            return res.end(`${username} created successfully`);
           });
         });
       });
@@ -33,7 +33,7 @@ function handleRequest(req, res) {
       fs.readFile(userPath + username + ".json", (err, content) => {
         if (err) return console.log(err);
         res.setHeader("Content-Type", "application/json");
-        res.end(content);
+        return res.end(content);
       });
     }
 
@@ -46,7 +46,7 @@ function handleRequest(req, res) {
           fs.writeFile(fd, store, (err) => {
             if (err) return console.log(err);
             fs.close(fd, () => {
-              res.end(`${username} updated successfully`);
+              return res.end(`${username} updated successfully`);
             });
           });
         });
@@ -57,9 +57,12 @@ function handleRequest(req, res) {
       var username = parsedUrl.query.username;
       fs.unlink(userPath + username + ".json", (err) => {
         if (err) return console.log(err);
-        res.end(`${username} deleted successfully`);
+        return res.end(`${username} deleted successfully`);
       });
     }
+
+    res.statusCode = 404;
+    res.end("Page not found");
   });
 }
 
